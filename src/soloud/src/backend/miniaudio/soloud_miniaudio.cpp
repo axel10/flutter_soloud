@@ -38,6 +38,11 @@ namespace SoLoud
 #else
 
 #define MINIAUDIO_IMPLEMENTATION
+// Keep COM apartment model aligned with Flutter Windows runner (STA),
+// preventing drag&drop/OLE regressions on the UI thread.
+#if defined(_WIN32) && !defined(MA_COINIT_VALUE)
+#define MA_COINIT_VALUE 2 /* COINIT_APARTMENTTHREADED */
+#endif
 // // #define MA_NO_NULL
 // #define MA_NO_DECODING
 // #define MA_NO_WAV
